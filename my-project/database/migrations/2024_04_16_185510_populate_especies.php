@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('pets', function (Blueprint $table) {
-            $table->foreignIdFor(\App\Models\User::class);
-        });
+        DB::table('especies')->insert(
+            array(
+                ['nome' => 'cão'],
+                ['nome' => 'gato'],
+            )
+        );
     }
 
     /**
@@ -21,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('pet', function (Blueprint $table) {
-            //
-        });
+        //
     }
 };
