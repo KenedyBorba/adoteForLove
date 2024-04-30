@@ -16,14 +16,14 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <!-- Telefone Address -->
+        <!-- Telefone -->
         <div class="mt-4">
-            <x-input-label for="phone_number" :value="__('Telefone')" />
-            <x-text-input id="phone_number" class="block mt-1 w-full" type="tel" name="phone_number" :value="old('phone_number')" required autofocus autocomplete="phone_number" />
-            <x-input-error :messages="$errors->get('phone_number')" class="mt-2" />
+            <x-input-label for="telefone" :value="__('Telefone')" />
+            <x-text-input id="telefone" class="block mt-1 w-full" type="tel" name="telefone" :value="old('telefone')" required autofocus autocomplete="telefone" />
+            <x-input-error :messages="$errors->get('telefone')" class="mt-2" />
         </div>
 
-        <!-- Telefone Address -->
+        <!-- Data de nascimento -->
         <div class="mt-4">
             <x-input-label for="data_nascimento" :value="__('Data de Nascimento')" />
             <x-text-input id="data_nascimento" class="block mt-1 w-full" type="date" name="data_nascimento" :value="old('data_nascimento')" required autofocus autocomplete="data_nascimento" />

@@ -6,6 +6,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Endereco;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
 {
@@ -22,11 +24,10 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'phone_number',
+        'telefone',
         'data_nascimento',
         'email',
-        'password',
-        'endereco_id'
+        'password'
     ];
 
     /**
@@ -51,4 +52,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function endereco(): HasOne
+    {
+        return $this->hasOne(Endereco::class);
+    }
+
 }

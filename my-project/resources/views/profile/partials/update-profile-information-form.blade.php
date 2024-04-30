@@ -24,9 +24,15 @@
         </div>
 
         <div>
-            <x-input-label for="phone" :value="__('Telefone')" />
-            <x-text-input id="phone" name="phone" type="text" class="mt-1 block w-full" :value="old('phone', $user->phone)" required autofocus autocomplete="phone" />
-            <x-input-error class="mt-2" :messages="$errors->get('phone')" />
+            <x-input-label for="telefone" :value="__('Telefone')" />
+            <x-text-input id="telefone" name="telefone" type="text" class="mt-1 block w-full" :value="old('telefone', $user->telefone)" />
+            <x-input-error class="mt-2" :messages="$errors->get('telefone')" />
+        </div>
+
+        <div>
+            <x-input-label for="data_nascimento" :value="__('Data Nascimento')" />
+            <x-text-input id="data_nascimento" name="data_nascimento" type="date" class="mt-1 block w-full" :value="old('data_nascimento', $user->data_nascimento)" />
+            <x-input-error class="mt-2" :messages="$errors->get('data_nascimento')" />
         </div>
 
         <div>
@@ -53,8 +59,66 @@
             @endif
         </div>
 
+        
+        <!-- endereco -->
+
+        <div>
+            <x-input-label for="logradouro" :value="__('Logradouro')" />
+            <x-text-input id="logradouro" name="logradouro" type="text" class="mt-1 block w-full" :value="old('logradouro', $endereco->logradouro)" />
+            <x-input-error class="mt-2" :messages="$errors->get('logradouro')" />
+        </div>
+
+        <div>
+            <x-input-label for="numero" :value="__('Número')" />
+            <x-text-input id="numero" name="numero" type="text" class="mt-1 block w-full" :value="old('numero', $endereco->numero)" />
+            <x-input-error class="mt-2" :messages="$errors->get('numero')" />
+        </div>
+
+        <div>
+            <x-input-label for="bairro" :value="__('Bairro')" />
+            <x-text-input id="bairro" name="bairro" type="text" class="mt-1 block w-full" :value="old('bairro', $endereco->bairro)" />
+            <x-input-error class="mt-2" :messages="$errors->get('bairro')" />
+        </div>
+
+        <div class="mb-3">
+            <x-input-label for="estado" :value="__('Estado')" />
+            <select class="mt-1 block w-full" id="estado" name="estado">
+                <option selected disabled>Selecionar estado</option>
+                @foreach ($estados as $estado)
+                <option value="{{ $estado->id }}">{{ $estado->nome }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <x-input-label for="cidade" :value="__('Cidade')" />
+            <select class="mt-1 block w-full" id="cidade" name="cidade"></select>
+        </div>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#estado').on('change', function () {
+                    var estadoId = this.value;
+                    $('#cidade').html('');
+                    $.ajax({
+                        url: '{{ route('cidades') }}?estado_id='+estadoId,
+                        type: 'get',
+                        success: function (res) {
+                            $('#cidade').html('<option value="">Selecionar Cidade</option>');
+                            $.each(res, function (key, value) {
+                                $('#cidade').append('<option value="' + value
+                                    .id + '">' + value.nome + '</option>');
+                            });
+                        }
+                    });
+                });
+            });
+        </script>
+
+        <!-- fim endereco -->
+
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Savar') }}</x-primary-button>
+            <x-primary-button>{{ __('Salvar') }}</x-primary-button>
 
             @if (session('status') === 'profile-updated')
                 <p

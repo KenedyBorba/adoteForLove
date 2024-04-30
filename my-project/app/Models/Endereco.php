@@ -14,8 +14,8 @@ class Endereco extends Model
         'logradouro',
         'numero',
         'bairro',
-        'cidade',
-        'estado',
+        'estado_id',
+        'cidade_id',
     ];
 
     public function users(){
