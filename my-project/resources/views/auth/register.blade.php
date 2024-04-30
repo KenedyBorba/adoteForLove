@@ -19,14 +19,14 @@
         <!-- Telefone -->
         <div class="mt-4">
             <x-input-label for="telefone" :value="__('Telefone')" />
-            <x-text-input id="telefone" class="block mt-1 w-full" type="tel" name="telefone" :value="old('telefone')" required autofocus autocomplete="telefone" />
+            <x-text-input id="telefone" class="block mt-1 w-full" type="tel" name="telefone" :value="old('telefone')" />
             <x-input-error :messages="$errors->get('telefone')" class="mt-2" />
         </div>
 
         <!-- Data de nascimento -->
         <div class="mt-4">
             <x-input-label for="data_nascimento" :value="__('Data de Nascimento')" />
-            <x-text-input id="data_nascimento" class="block mt-1 w-full" type="date" name="data_nascimento" :value="old('data_nascimento')" required autofocus autocomplete="data_nascimento" />
+            <x-text-input id="data_nascimento" class="block mt-1 w-full" type="date" name="data_nascimento" :value="old('data_nascimento')" />
             <x-input-error :messages="$errors->get('data_nascimento')" class="mt-2" />
         </div>
 

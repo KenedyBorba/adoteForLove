@@ -64,35 +64,35 @@
 
         <div>
             <x-input-label for="logradouro" :value="__('Logradouro')" />
-            <x-text-input id="logradouro" name="logradouro" type="text" class="mt-1 block w-full" :value="old('logradouro', $endereco->logradouro)" />
+            <x-text-input id="logradouro" name="logradouro" type="text" class="mt-1 block w-full" :value="old('logradouro', optional($endereco)->logradouro)" />
             <x-input-error class="mt-2" :messages="$errors->get('logradouro')" />
         </div>
 
         <div>
             <x-input-label for="numero" :value="__('Número')" />
-            <x-text-input id="numero" name="numero" type="text" class="mt-1 block w-full" :value="old('numero', $endereco->numero)" />
+            <x-text-input id="numero" name="numero" type="text" class="mt-1 block w-full" :value="old('numero', optional($endereco)->numero)" />
             <x-input-error class="mt-2" :messages="$errors->get('numero')" />
         </div>
 
         <div>
             <x-input-label for="bairro" :value="__('Bairro')" />
-            <x-text-input id="bairro" name="bairro" type="text" class="mt-1 block w-full" :value="old('bairro', $endereco->bairro)" />
+            <x-text-input id="bairro" name="bairro" type="text" class="mt-1 block w-full" :value="old('bairro', optional($endereco)->bairro)" />
             <x-input-error class="mt-2" :messages="$errors->get('bairro')" />
         </div>
 
         <div class="mb-3">
             <x-input-label for="estado" :value="__('Estado')" />
-            <select class="mt-1 block w-full" id="estado" name="estado">
-                <option selected disabled>Selecionar estado</option>
+            <select class="mt-1 block w-full" id="estado" name="estado" >
+                <option selected disabled >Selecionar estado</option>
                 @foreach ($estados as $estado)
-                <option value="{{ $estado->id }}">{{ $estado->nome }}</option>
+                <option value="{{ $estado->id }}" >{{ $estado->nome }}</option>
                 @endforeach
             </select>
         </div>
 
         <div class="mb-3">
             <x-input-label for="cidade" :value="__('Cidade')" />
-            <select class="mt-1 block w-full" id="cidade" name="cidade"></select>
+            <select class="mt-1 block w-full" id="cidade" name="cidade" ></select>
         </div>
 
         <script type="text/javascript">
@@ -127,7 +127,7 @@
                     x-transition
                     x-init="setTimeout(() => show = false, 2000)"
                     class="text-sm text-gray-600"
-                >{{ __('Savo.') }}</p>
+                >{{ __('Salvo.') }}</p>
             @endif
         </div>
     </form>

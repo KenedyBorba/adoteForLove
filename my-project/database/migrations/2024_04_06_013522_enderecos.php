@@ -16,8 +16,9 @@ return new class extends Migration
             $table->string('rua')->nullable();
             $table->integer('numero')->nullable();
             $table->string('bairro')->nullable();
-            $table->foreignIdFor(\App\Models\Estado::class);
-            $table->foreignIdFor(\App\Models\Cidade::class);
+            $table->foreignIdFor(\App\Models\Estado::class)->nullable();
+            $table->foreignIdFor(\App\Models\Cidade::class)->nullable();
+
             $table->timestamp('criado_em')->nullable();
         });
     }
