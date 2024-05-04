@@ -82,17 +82,28 @@
 
         <div class="mb-3">
             <x-input-label for="estado" :value="__('Estado')" />
-            <select class="mt-1 block w-full" id="estado" name="estado" >
+            <select class="mt-1 block w-full rounded-md" id="estado" name="estado" >
                 <option selected disabled >Selecionar estado</option>
                 @foreach ($estados as $estado)
-                <option value="{{ $estado->id }}" >{{ $estado->nome }}</option>
+                <option @if ($estadoIdSelected == $estado->id) selected @endif value="{{ $estado->id }}">{{ $estado->nome }}</option>
                 @endforeach
             </select>
         </div>
 
         <div class="mb-3">
+
             <x-input-label for="cidade" :value="__('Cidade')" />
-            <select class="mt-1 block w-full" id="cidade" name="cidade" ></select>
+            @if ($cidades)
+                <select class="mt-1 block w-full rounded-md" id="cidade" name="cidade" >
+                    <option selected disabled >Selecionar cidade</option>
+                    @foreach ($cidades as $cidade)
+                    <option @if ($cidadeIdSelected == $cidade->id) selected @endif value="{{ $cidade->id }}">{{ $cidade->nome }}</option>
+                    @endforeach
+                </select>
+            @else
+                <select class="mt-1 block w-full rounded-md" id="cidade" name="cidade" ></select>
+            @endif
+
         </div>
 
         <script type="text/javascript">

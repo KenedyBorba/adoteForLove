@@ -22,10 +22,6 @@ class Endereco extends Model
         return $this->hasMany(User::class);
     }
 
-    public function pets(){
-        return $this->hasMany(Pet::class);
-    }
-
     public function cidades(){
         return $this->belongsTo(Cidade::class);
     }

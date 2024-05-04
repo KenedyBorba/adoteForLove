@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use App\Models\Endereco;
 
@@ -18,14 +19,22 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+
         $estados = $this->getEstados();
-        
-        //var_dump($request->user()->endereco_id); die;
+
+        $endereco = Endereco::find($request->user()->endereco_id);
+        $cidades = $this->getCidadesByEstadoId($endereco->estado_id);
+
+        $cidadeIdSelected = $endereco->cidade_id;
+        $estadoIdSelected = $endereco->estado_id;
 
         return view('profile.edit', [
             'user' => $request->user(),
-            'endereco' => Endereco::find($request->user()->endereco_id),
-            'estados' => $estados
+            'endereco' => $endereco,
+            'estados' => $estados,
+            'cidades' => $cidades,
+            'cidadeIdSelected' => $cidadeIdSelected,
+            'estadoIdSelected' => $estadoIdSelected
         ]);
     }
 
@@ -34,7 +43,6 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-
         $request->user()->fill($request->validated());
 
         if ($request->user()->isDirty('email')) {
@@ -83,20 +91,33 @@ class ProfileController extends Controller
 
     public function getEstados()
     {
-        $estados = \DB::table('estados')
+        $estados = DB::table('estados')
             -> get();
         return $estados;
     }
 
     public function getCidades(Request $request)
     {
-        $cidades = \DB::table('cidades')
-        ->where('estado_id', $request->estado_id)
-        ->get();
+        $cidades = DB::table('cidades')
+            ->where('estado_id', $request->estado_id)
+            ->get();
 
         if(count($cidades) > 0){
             return response()->json($cidades);
         }
+    }
+
+    public function getCidadesByEstadoId(string $estadoId)
+    {
+        $cidades = DB::table('cidades')
+            ->where('estado_id', $estadoId)
+            ->get();
+
+        if(count($cidades) > 0){
+            return $cidades;
+        }
+
+        return [];
     }
 
 }

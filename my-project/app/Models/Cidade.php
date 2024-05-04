@@ -13,4 +13,7 @@ class Cidade extends Model
         return $this->hasMany(Endereco::class);
     }
 
+    public function pets(){
+        return $this->hasMany(Pet::class);
+    }
 }
