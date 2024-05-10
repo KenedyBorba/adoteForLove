@@ -4,24 +4,18 @@
             {{ __('Cadastrar Pet') }}
         </h2>
 
-        @if($errors->any())
-            <span style="color: #ff0000;">
-                @foreach ($errors->all() as $error)
-                    {{ $error }}<br>
-                @endforeach
-            </span>
-            <br>
-        @endif
-        <br>
-
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
 
-                <form action="{{ route('pets.store') }}" method="POST">
+                <form action="{{ route('pets.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    <div class="mb-3">
+                        <x-input-label for="image" :value="__('Imagem do Pet')" />
+                        <input type="file" id="image" name="image" class="from-control-file">
+                    </div>
                     <div class="mb-3">
                         <x-input-label for="nome" :value="__('Nome')" />
                         <x-text-input id="nome" name="nome" type="text" class="mt-1 block w-full" value="{{ old('nome') }}"/>
@@ -37,8 +31,8 @@
 
                     <div class="mb-3">
                         <x-input-label for="porte" :value="__('Porte')" />
-                        <select class="mt-1 block w-full rounded-md" id="porte" name="porte" >
-                            <option selected disabled >Selecionar Porte</option>
+                        <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="porte" name="porte" >
+                            <option selected disabled >Selecionar porte</option>
                             @foreach ($portes as $porte)
                             <option value="{{ $porte->id }}">{{ $porte->nome }}</option>
                             @endforeach
@@ -47,8 +41,8 @@
 
                     <div class="mb-3">
                         <x-input-label for="especie" :value="__('Espécie')" />
-                        <select class="mt-1 block w-full rounded-md" id="especie" name="especie" >
-                            <option selected disabled >Selecionar Espécie</option>
+                        <select  class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="especie" name="especie" >
+                            <option selected disabled >Selecionar espécie</option>
                             @foreach ($especies as $especie)
                             <option value="{{ $especie->id }}">{{ $especie->nome }}</option>
                             @endforeach
@@ -57,8 +51,8 @@
 
                     <div class="mb-3">
                         <x-input-label for="raca" :value="__('Raça')" />
-                        <select class="mt-1 block w-full rounded-md" id="raca" name="raca" >
-                            <option selected disabled >Selecionar Raça</option>
+                        <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="raca" name="raca" >
+                            <option selected disabled >Selecionar raça</option>
                             @foreach ($racas as $raca)
                             <option value="{{ $raca->id }}">{{ $raca->nome }}</option>
                             @endforeach
@@ -69,8 +63,40 @@
                         <x-text-input id="vacinas" name="vacinas" type="text" class="mt-1 block w-full" value="{{ old('vacinas') }}"/>
                     </div>
 
-
-
+                    <div class="mb-3">
+                        <x-input-label for="estado" :value="__('Estado')" />
+                        <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="estado" name="estado">
+                            <option selected disabled>Selecionar estado</option>
+                            @foreach ($estados as $estado)
+                            <option value="{{ $estado->id }}">{{ $estado->nome }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+            
+                    <div class="mb-3">
+                        <x-input-label for="cidade" :value="__('Cidade')" />
+                        <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="cidade" name="cidade"></select>
+                    </div>
+            
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            $('#estado').on('change', function () {
+                                var estadoId = this.value;
+                                $('#cidade').html('');
+                                $.ajax({
+                                    url: '{{ route('cidades') }}?estado_id='+estadoId,
+                                    type: 'get',
+                                    success: function (res) {
+                                        $('#cidade').html('<option value="">Selecionar Cidade</option>');
+                                        $.each(res, function (key, value) {
+                                            $('#cidade').append('<option value="' + value
+                                                .id + '">' + value.nome + '</option>');
+                                        });
+                                    }
+                                });
+                            });
+                        });
+                    </script>
 
                     <x-primary-button>Cadastrar</x-primary-button>
                 </form>

@@ -14,14 +14,16 @@ class Pet extends Model
     protected $fillable = [
         'id', 
         'descricao', 
-        'endereco_id', 
         'especie_id', 
         'idadeEstimada', 
         'nome', 
+        'estado_id',
+        'cidade_id',
         'porte_id', 
         'raca_id', 
         'user_id', 
-        'vacinas'
+        'vacinas',
+        'image'
     ];
 
     public function users(){

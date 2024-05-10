@@ -23,19 +23,31 @@ class ProfileController extends Controller
         $estados = $this->getEstados();
 
         $endereco = Endereco::find($request->user()->endereco_id);
-        $cidades = $this->getCidadesByEstadoId($endereco->estado_id);
 
-        $cidadeIdSelected = $endereco->cidade_id;
-        $estadoIdSelected = $endereco->estado_id;
+        if ($endereco != null) {
+            $cidades = $this->getCidadesByEstadoId($endereco->estado_id);
 
-        return view('profile.edit', [
-            'user' => $request->user(),
-            'endereco' => $endereco,
-            'estados' => $estados,
-            'cidades' => $cidades,
-            'cidadeIdSelected' => $cidadeIdSelected,
-            'estadoIdSelected' => $estadoIdSelected
-        ]);
+            $cidadeIdSelected = $endereco->cidade_id;
+            $estadoIdSelected = $endereco->estado_id;
+    
+            return view('profile.edit', [
+                'user' => $request->user(),
+                'endereco' => $endereco,
+                'estados' => $estados,
+                'cidades' => $cidades,
+                'cidadeIdSelected' => $cidadeIdSelected,
+                'estadoIdSelected' => $estadoIdSelected
+            ]);
+        }else{
+            return view('profile.edit', [
+                'user' => $request->user(),
+                'endereco' => $endereco,
+                'estados' => $estados,
+                'cidades' => 0,
+                'cidadeIdSelected' => 0,
+                'estadoIdSelected' => 0
+            ]);
+        }
     }
 
     /**

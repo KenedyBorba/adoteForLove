@@ -82,7 +82,7 @@
 
         <div class="mb-3">
             <x-input-label for="estado" :value="__('Estado')" />
-            <select class="mt-1 block w-full rounded-md" id="estado" name="estado" >
+            <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="estado" name="estado" >
                 <option selected disabled >Selecionar estado</option>
                 @foreach ($estados as $estado)
                 <option @if ($estadoIdSelected == $estado->id) selected @endif value="{{ $estado->id }}">{{ $estado->nome }}</option>
@@ -94,14 +94,14 @@
 
             <x-input-label for="cidade" :value="__('Cidade')" />
             @if ($cidades)
-                <select class="mt-1 block w-full rounded-md" id="cidade" name="cidade" >
+                <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="cidade" name="cidade" >
                     <option selected disabled >Selecionar cidade</option>
                     @foreach ($cidades as $cidade)
-                    <option @if ($cidadeIdSelected == $cidade->id) selected @endif value="{{ $cidade->id }}">{{ $cidade->nome }}</option>
+                        <option @if ($cidadeIdSelected == $cidade->id) selected @endif value="{{ $cidade->id }}">{{ $cidade->nome }}</option>
                     @endforeach
                 </select>
             @else
-                <select class="mt-1 block w-full rounded-md" id="cidade" name="cidade" ></select>
+                <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="cidade" name="cidade" ></select>
             @endif
 
         </div>

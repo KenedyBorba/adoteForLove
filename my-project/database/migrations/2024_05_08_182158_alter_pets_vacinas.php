@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        DB::table('especies')->insert(
-            array(
-                ['nome' => 'Cão'],
-                ['nome' => 'Gato'],
-            )
-        );
+        Schema::table('pets', function (Blueprint $table) {
+            $table->string('vacinas')->change();
+        });
     }
 
     /**

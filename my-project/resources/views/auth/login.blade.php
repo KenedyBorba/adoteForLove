@@ -42,6 +42,13 @@
             <x-primary-button class="ms-3">
                 {{ __('Entrar') }}
             </x-primary-button>
+
+            <x-primary-button class="ms-3">
+                <a style="text-decoration: none; color: inherit;" href="{{ route('register') }}">
+                    {{ __('Cadastrar') }}
+                </a>
+            </x-primary-button>
         </div>
+
     </form>
 </x-guest-layout>

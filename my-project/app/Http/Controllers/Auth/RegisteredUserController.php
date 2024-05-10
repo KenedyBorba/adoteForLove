@@ -36,9 +36,6 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'telefone' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'logradouro' => ['required', 'string', 'max:255'],
-            'numero' => ['required', 'string'],
-            'bairro' => ['required', 'string', 'max:255'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -48,14 +45,6 @@ class RegisteredUserController extends Controller
             'data_nascimento' => $dataNascimento,
             'email' => $request->email,
             'password' => Hash::make($request->password)
-        ]);
-
-        $endereco = Endereco::create([
-            'logradouro' => $request->logradouro,
-            'numero' => $request->numero,
-            'bairro' => $request->bairro,
-            'estado' => $request->estado,
-            'cidade' => $request->cidade
         ]);
 
         event(new Registered($user));

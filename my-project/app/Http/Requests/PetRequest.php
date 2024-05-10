@@ -22,32 +22,12 @@ class PetRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'descricao' => 'required',
-            'especie_id' => 'required',
-            'cidade_id' => 'required',
-            'estado_id' => 'required',
-            'idadeEstimada' => 'required',
-            'nome' => 'required',
-            'porte_id' => 'required',
-            'raca_id' => 'required',
-            'user_id' => 'required',
-            'vacinas' => 'required',
         ];
     }
 
     public function messages(): array
     {
         return[
-            'descricao.required' => "Campo Descrição é obrigatório!",
-            'especie_id.required' => "Campo Espécie é obrigatório!",
-            'cidade_id.required' => "Campo Cidade é obrigatório!",
-            'estado_id.required' => "Campo Estado é obrigatório!",
-            'idadeEstimada.required' => "Campo Idade Estimada é obrigatório!",
-            'nome.required' => 'Campo Nome é obrigatório!',
-            'porte_id.required' => "Campo Porte é obrigatório!",
-            'raca_id.required' => "Campo Raça é obrigatório!",
-            'user_id.required' => "Campo Nome do Doador é obrigatório!",
-            'vacinas.required' => "Campo Vacinas é obrigatório!",
         ];
     }
 }
