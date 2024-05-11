@@ -23,7 +23,9 @@ class Pet extends Model
         'raca_id', 
         'user_id', 
         'vacinas',
-        'image'
+        'image',
+        'genero',
+        'castracao'
     ];
 
     public function users(){

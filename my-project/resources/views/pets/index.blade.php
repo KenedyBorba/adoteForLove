@@ -34,6 +34,14 @@
                     </div>
                 </div>
 
+                <div class="flex items-center mb-3" style="justify-content: space-between">
+                    <a href="{{ route('pets.create') }}">
+                        <div style="justify-content: space-between" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                            {{ __('Cadastrar novo pet') }}
+                        </div>
+                    </a>
+                </div>
+
                 @forelse ($pets as $petIndex => $pet)
                     @if ($petIndex % 2 === 0)
                         <div class="row">
@@ -67,12 +75,7 @@
                     </div>
                 @endforelse
 
-                <div class="flex items-center" style="justify-content: space-between">
-                    <a href="{{ route('pets.create') }}">
-                        <div style="justify-content: space-between" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                            {{ __('Cadastrar novo pet') }}
-                        </div>
-                    </a>
+                <div class="col-md-8">
                     {{ $pets->onEachSide(5)->links() }}
                 </div>
 

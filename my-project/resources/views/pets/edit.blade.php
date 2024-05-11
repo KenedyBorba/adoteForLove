@@ -9,12 +9,12 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
 
-                <form action="{{ route('pets.update', $pet) }}" method="POST">
+                <form action="{{ route('pets.update', $pet) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="mb-3">
                         <x-input-label for="image" :value="__('Imagem do Pet')" />
-                        <input type="file" id="image" name="image" class="from-control-file" value="{{ old('nome', $pet->image) }}">
+                        <input type="file" id="image" name="image" class="from-control-file">
                     </div>
                     <div class="mb-3">
                         <x-input-label :value="__('Nome')" />

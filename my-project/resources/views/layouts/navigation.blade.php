@@ -38,8 +38,8 @@
                             {{ __('Perfil') }}
                         </x-dropdown-link>
 
-                        <x-dropdown-link :href="route('pets.index')">
-                            {{ __('Pets') }}
+                        <x-dropdown-link :href="route('pets.myPets')">
+                            {{ __('Meus Pets') }}
                         </x-dropdown-link>
                         
                         <!-- Authentication -->

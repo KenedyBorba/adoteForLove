@@ -20,13 +20,7 @@ Route::middleware('auth')->group(function () {
 
     //pets
     Route::resource('pets', PetController::class);
-
-    // Route::get('/listar-pets', [PetController::class, 'list'])->name('pets.list');
-    // Route::get('/editar-pet/{id}', [PetController::class, 'edit'])->name('pets.edit');
-    // Route::get('/visualizar-pet/{id}', [PetController::class, 'show'])->name('pets.show');
-    // Route::get('/visualizar-pet/{id}', [PetController::class, 'update'])->name('pets.update');
-    // Route::get('/cadastrar-pet', [PetController::class, 'create']);
-    // Route::post('/cadastrar-pet', [PetController::class, 'store'])->name('pets.create');
+    Route::get('/my-pets',[PetController::class, 'myPets'])->name('pets.myPets');
 
     //enderecos
     Route::get('/estados', [ProfileController::class, 'getEstados'])->name('estados');

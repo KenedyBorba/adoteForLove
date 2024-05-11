@@ -26,7 +26,29 @@ class PetController extends Controller
         ->with('especies')
         ->with('racas')
         ->orderByDesc('created_at')
-        ->paginate(10)
+        ->paginate(3)
+        ->withQueryString();
+
+        return view('pets.index', [
+            'pets' => $pets,
+            'nome' => $request->nome,
+            'image' => $request->image,
+        ]);
+    }
+
+    public function myPets(Request $request)
+    {
+        $user_id  = $request->user()->id;
+        
+        $pets = Pet::when($request->has('nome'), function ($whenQuery) use ($request){
+            $whenQuery->where('nome', 'like', '%' . $request->nome . '%');
+        })
+        ->with('portes')
+        ->with('especies')
+        ->with('racas')
+        ->where('user_id', $user_id)
+        ->orderByDesc('created_at')
+        ->paginate(3)
         ->withQueryString();
 
         return view('pets.index', [
@@ -44,6 +66,8 @@ class PetController extends Controller
         $doador = User::find($pet->user_id);
         $estado = Estado::find($pet->estado_id);
         $cidade = Cidade::find($pet->cidade_id);
+
+        // dd($pet);
 
         return view('pets.show', [
             'pet' => $pet,
@@ -125,9 +149,24 @@ class PetController extends Controller
     {
         $pet->fill($request->all());
 
-        $pet->especies()->associate(Especie::find($pet->especie_id));
-        $pet->racas()->associate(Raca::find($pet->raca_id));
-        $pet->portes()->associate(Porte::find($pet->porte_id));
+        $pet->especie_id = $request->input('especie');
+        $pet->porte_id = $request->input('porte');
+        $pet->raca_id = $request->input('raca');
+        $pet->estado_id = $request->input('estado');
+        $pet->cidade_id = $request->input('cidade');
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $requestImage = $request->image;
+
+            $extension = $requestImage->extension();
+
+            $imageName = md5($requestImage->getClientOriginalName()) .'.'. strtotime("now") . "." . $extension;
+
+            $requestImage->move(public_path('img/pets'), $imageName);
+
+            $pet->image = 'img/pets/' . $imageName; 
+        }
+        
         $pet->save();
 
         return redirect()->route('pets.index');

@@ -40,6 +40,34 @@
                     </div>
 
                     <div class="mb-3">
+                        <x-input-label for="porte" :value="__('Porte')" />
+                        <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="porte" name="porte" >
+                            <option selected disabled >Selecionar porte</option>
+                            @foreach ($portes as $porte)
+                            <option value="{{ $porte->id }}">{{ $porte->nome }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <x-input-label for="genero" :value="__('Castração')" />
+                        <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="castracao" name="castracao" >
+                            <option selected disabled >Selecionar castração</option>
+                            <option value="Sim">Sim</option>
+                            <option value="Não">Não</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <x-input-label for="genero" :value="__('Gênero')" />
+                        <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="genero" name="genero" >
+                            <option selected disabled >Selecionar gênero</option>
+                            <option value="Macho">Macho</option>
+                            <option value="Fêmea">Fêmea</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
                         <x-input-label for="especie" :value="__('Espécie')" />
                         <select  class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="especie" name="especie" >
                             <option selected disabled >Selecionar espécie</option>

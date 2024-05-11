@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('pets', function (Blueprint $table) {
-            $table->string('image');
+            $table->enum('genero', ['Macho', 'Fêmea'])->nullable();
+            $table->enum('castracao', ['Sim', 'Não'])->nullable();
         });
     }
 
