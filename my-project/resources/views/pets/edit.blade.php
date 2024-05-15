@@ -18,20 +18,20 @@
                     </div>
                     <div class="mb-3">
                         <x-input-label :value="__('Nome')" />
-                        <x-text-input id="nome" name="nome" type="text" class="mt-1 block w-full" value="{{ old('nome', $pet->nome) }}"/>
+                        <x-text-input id="nome" name="nome" type="text" class="mt-1 block w-full" value="{{ old('nome', $pet->nome) }}" required/>
                     </div>
                     <div class="mb-3">
                         <x-input-label for="descricao" :value="__('Descrição')" />
-                        <x-text-input id="descricao" name="descricao" type="text" class="mt-1 block w-full" value="{{ old('descricao', $pet->descricao) }}"/>
+                        <x-text-input id="descricao" name="descricao" type="text" class="mt-1 block w-full" value="{{ old('descricao', $pet->descricao) }}" required/>
                     </div>
                     <div class="mb-3">
                         <x-input-label for="idadeEstimada" :value="__('Idade estimada')" />
-                        <x-text-input id="idadeEstimada" name="idadeEstimada" type="text" class="mt-1 block w-full" value="{{ old('idadeEstimada', $pet->idadeEstimada) }}"/>
+                        <x-text-input id="idadeEstimada" name="idadeEstimada" type="number" class="mt-1 block w-full" value="{{ old('idadeEstimada', $pet->idadeEstimada) }}" required/>
                     </div>
 
                     <div class="mb-3">
                         <x-input-label for="porte" :value="__('Porte')" />
-                        <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="porte" name="porte" >
+                        <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="porte" name="porte" required>
                             <option selected disabled >Selecionar porte</option>
                             @foreach ($portes as $porte)
                             <option @if ($portesIdSelected == $porte->id) selected @endif value="{{ $porte->id }}">{{ $porte->nome }}</option>
@@ -40,8 +40,26 @@
                     </div>
 
                     <div class="mb-3">
+                        <x-input-label for="genero" :value="__('Castração')" />
+                        <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="castracao" name="castracao" required>
+                            <option selected disabled >Selecionar castração</option>
+                            <option @if ($pet->castracao == "Sim") selected @endif value="Sim">Sim</option>
+                            <option @if ($pet->castracao == "Não") selected @endif value="Não">Não</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <x-input-label for="genero" :value="__('Gênero')" />
+                        <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="genero" name="genero" required>
+                            <option selected disabled >Selecionar gênero</option>
+                            <option @if ($pet->genero == "Macho") selected @endif value="Macho">Macho</option>
+                            <option @if ($pet->genero == "Fêmea") selected @endif value="Fêmea">Fêmea</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
                         <x-input-label for="especie" :value="__('Espécie')" />
-                        <select  class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="especie" name="especie" >
+                        <select  class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="especie" name="especie" required>
                             <option selected disabled >Selecionar espécie</option>
                             @foreach ($especies as $especie)
                             <option @if ($especiesIdSelected == $especie->id) selected @endif value="{{ $especie->id }}">{{ $especie->nome }}</option>
@@ -51,7 +69,7 @@
 
                     <div class="mb-3">
                         <x-input-label for="raca" :value="__('Raça')" />
-                        <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="raca" name="raca" >
+                        <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="raca" name="raca" required>
                             <option selected disabled >Selecionar raça</option>
                             @foreach ($racas as $raca)
                             <option @if ($racasIdSelected == $raca->id) selected @endif value="{{ $raca->id }}">{{ $raca->nome }}</option>
@@ -61,12 +79,12 @@
 
                     <div class="mb-3">
                         <x-input-label :value="__('Vacinas')" />
-                        <x-text-input id="vacinas" name="vacinas" type="text" class="mt-1 block w-full" value="{{ old('vacinas', $pet->vacinas) }}"/>
+                        <x-text-input id="vacinas" name="vacinas" type="text" class="mt-1 block w-full" value="{{ old('vacinas', $pet->vacinas) }}" required/>
                     </div>
 
                     <div class="mb-3">
                         <x-input-label for="estado" :value="__('Estado')" />
-                        <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="estado" name="estado" >
+                        <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="estado" name="estado" required>
                             <option selected disabled >Selecionar estado</option>
                             @foreach ($estados as $estado)
                             <option @if ($estadoIdSelected == $estado->id) selected @endif value="{{ $estado->id }}">{{ $estado->nome }}</option>
@@ -75,19 +93,17 @@
                     </div>
             
                     <div class="mb-3">
-            
                         <x-input-label for="cidade" :value="__('Cidade')" />
                         @if ($cidades)
-                            <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="cidade" name="cidade" >
+                            <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="cidade" name="cidade" required>
                                 <option selected disabled >Selecionar cidade</option>
                                 @foreach ($cidades as $cidade)
                                     <option @if ($cidadeIdSelected == $cidade->id) selected @endif value="{{ $cidade->id }}">{{ $cidade->nome }}</option>
                                 @endforeach
                             </select>
                         @else
-                            <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="cidade" name="cidade" ></select>
+                            <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="cidade" name="cidade" required></select>
                         @endif
-            
                     </div>
             
                     <script type="text/javascript">

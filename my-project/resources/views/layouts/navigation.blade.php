@@ -88,6 +88,10 @@
                     {{ __('Perfil') }}
                 </x-responsive-nav-link>
 
+                <x-responsive-nav-link :href="route('pets.myPets')">
+                    {{ __('Meus Pets') }}
+                </x-responsive-nav-link>
+
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf

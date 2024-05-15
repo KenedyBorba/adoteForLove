@@ -15,8 +15,10 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
         <script src="{{ asset('vendor/sweetalert/swal.js') }}"></script>
-        <link rel="stylesheet" href="{{ asset('vendor/sweetalert/swal.css') }}"/>
-        
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <link rel="stylesheet" href="https://fontawesome.com/">
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])

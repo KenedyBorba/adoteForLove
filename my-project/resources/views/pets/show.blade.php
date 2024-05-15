@@ -39,10 +39,25 @@
                         <h2 class="text-lg font-medium text-gray-900"><strong>Castração:</strong> {{ $pet->castracao }}</h2>
                         <h2 class="text-lg font-medium text-gray-900"><strong>Estado:</strong> {{ $estado->nome}}</h2>
                         <h2 class="text-lg font-medium text-gray-900"><strong>Cidade:</strong> {{ $cidade->nome}}</h2>
-                        <h2 class="text-lg font-medium text-gray-900 mt-1"><strong>Dados do doador:</strong></h2>
-                        <h2 class="text-lg font-medium text-gray-900">{{ $doador->name }}</h2>
-                        <h2 class="text-lg font-medium text-gray-900">{{ $doador->telefone }}</h2>
-                        <h2 class="text-lg font-medium text-gray-900">{{ $doador->email }}</h2>
+
+                        <x-primary-button id="exibir-alerta" class="mt-1">INFORMAÇÕES PARA CONTATO</x-primary-button>
+
+                        <script>
+                            // Adicione um listener de evento de clique ao botão usando jQuery
+                            $(document).ready(function() {
+                                $('#exibir-alerta').click(function() {
+                                    // Exibe o SweetAlert2 quando o botão é clicado
+                                    Swal.fire({
+                                        html: '<h2 class="font-bold text-xl text-gray-800 leading-tight mb-1"><strong>Dados do doador:</strong></h2><h2 class="text-lg font-medium text-gray-900">{{ $doador->name }}</h2><h2 class="text-lg font-medium text-gray-900">{{ $telefone }}</h2><h2 class="text-lg font-medium text-gray-900">{{ $doador->email }}</h2>',
+                                        confirmButtonText: 'Entendi', // Texto do botão padrão
+                                        confirmButtonColor: '#212529',
+                                        customClass: {
+                                            confirmButton: 'inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150'
+                                        }
+                                    });
+                                });
+                            });
+                        </script>
                     </div>
                 </div>
 

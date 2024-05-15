@@ -9,38 +9,97 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
 
-                <div class="card mt-3 mb-4 border-light shadow">
-                    <div class="card-header d-flex justify-content-between">
-                        <span>Pesquisar</span>
-                    </div>
-
-                    <div class="card-body">
-                        <form action="{{ route('pets.index') }}">
-                            <div class="row">
-    
-                                <div class="col-md-6 col-sm-6">
-                                    <label class="form-label" for="nome">Nome</label>
-                                    <input type="text" name="nome" id="nome" class="form-control" value="{{ $nome }}" placeholder="Nome do pet" />
-                                </div>
-    
-                                <div class="col-md-6 col-sm-6 mt-3 pt-4">
-                                    <button type="submit" class="btn btn-info btn-sm">Pesquisar</button>
-                                    <a href="{{ route('pets.index') }}" class="btn btn-warning btn-sm">Limpar</a>
-                                </div>
-    
-                            </div>
-    
-                        </form>
-                    </div>
-                </div>
-
-                <div class="flex items-center mb-3" style="justify-content: space-between">
+                <div class="mb-3" style="justify-content: space-between">
                     <a href="{{ route('pets.create') }}">
                         <div style="justify-content: space-between" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                             {{ __('Cadastrar novo pet') }}
                         </div>
                     </a>
                 </div>
+
+                <div class="mb-3" style="justify-content: space-between">
+                    <form action="{{ route('pets.index') }}">
+                
+                        <div class="mb-3">
+                            <div id="mostrar-conteudo" style="cursor: pointer; justify-content: space-between" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                <img src="img/icon/filter.png" style="width: 12px; height: 12px;" class=""><span style="margin-left: 5px;" class="font-semibold">{{ __('Filtro') }}</span>
+                            </div>
+                        </div>
+                
+                        <div id="conteudo" class="hidden">
+                            <div class="mb-3">
+                                <div class="card mt-3 mb-4 border-light shadow">
+                
+                                    <div class="card-body">
+                                        <form action="{{ route('pets.index') }}">
+                                            <div class="mb-3">
+                                                <x-input-label for="nome">Nome</x-input-label>
+                                                <x-text-input type="text" name="nome" id="nome" class="mt-1 block w-full" value="{{ $nome }}" placeholder="Nome do pet" />
+                                            </div>
+                
+                                            <div class="mb-3">
+                                                <x-input-label for="especie_id" :value="__('Espécie')" />
+                                                <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="especie_id" name="especie_id" >
+                                                    <option selected disabled >Selecionar Espécie</option>
+                                                    @foreach ($especiesId as $especie)
+                                                    <option value="{{ $especie->id }}">{{ $especie->nome }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                
+                                            <div class="mb-3">
+                                                <x-input-label for="estado_id" :value="__('Estado')" />
+                                                <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="estado_id" name="estado_id" >
+                                                    <option selected disabled >Selecionar estado</option>
+                                                    @foreach ($estados as $estado)
+                                                    <option value="{{ $estado->id }}">{{ $estado->nome }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                
+                                            <div class="mb-3">
+                                                <x-input-label for="cidadeId" :value="__('Cidade')" />
+                                                <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="cidadeId" name="cidadeId"></select>
+                                            </div>
+                                    
+                                            <script type="text/javascript">
+                                                $(document).ready(function () {
+                                                    $('#estado_id').on('change', function () {
+                                                        var estadoId = this.value;
+                                                        $('#cidadeId').html('');
+                                                        $.ajax({
+                                                            url: '{{ route('cidades') }}?estado_id='+estadoId,
+                                                            type: 'get',
+                                                            success: function (res) {
+                                                                $('#cidadeId').html('<option value="">Selecionar Cidade</option>');
+                                                                $.each(res, function (key, value) {
+                                                                    $('#cidadeId').append('<option value="' + value
+                                                                        .id + '">' + value.nome + '</option>');
+                                                                });
+                                                            }
+                                                        });
+                                                    });
+                                                });
+                                            </script>
+                
+                                            <button type="submit" class="btn btn-sm bg-gray-800 text-white" style="background-color:rgb(21, 108, 223);">Pesquisar</button>
+                                            <a href="{{ route('pets.myPets') }}" class="btn btn-warning btn-sm font-semibold">Limpar</a>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <script>
+                    $(document).ready(function(){
+                        $("#mostrar-conteudo").click(function(){
+                            $("#conteudo").slideToggle();
+                        });
+                    });
+                </script>
 
                 @forelse ($pets as $petIndex => $pet)
                     @if ($petIndex % 2 === 0)

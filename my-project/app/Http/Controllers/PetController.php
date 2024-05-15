@@ -19,20 +19,36 @@ class PetController extends Controller
 {
     public function index(Request $request)
     {
-        $pets = Pet::when($request->has('nome'), function ($whenQuery) use ($request){
+        $estados = $this->getEstados();
+        $especiesId = $this->getEspecies();
+        
+        $pets = Pet::when($request->has('nome'), function ($whenQuery) use ($request) {
             $whenQuery->where('nome', 'like', '%' . $request->nome . '%');
         })
-        ->with('portes')
-        ->with('especies')
-        ->with('racas')
+        ->when($request->filled('especie_id'), function ($whenQuery) use ($request) {
+            $whenQuery->where('especie_id', $request->especie_id);
+        })
+        ->when($request->filled('estado_id'), function ($whenQuery) use ($request) {
+            $whenQuery->where('estado_id', $request->estado_id);
+        })
+        ->when($request->filled('estado_id') && $request->filled('cidadeId'), function ($whenQuery) use ($request) {
+            $whenQuery->where('cidade_id', $request->cidadeId);
+        })
         ->orderByDesc('created_at')
         ->paginate(3)
         ->withQueryString();
 
+        // dd($request->cidade_id);
+
         return view('pets.index', [
             'pets' => $pets,
             'nome' => $request->nome,
+            'estado_id' => $request->estado_id,
+            'cidadeId' => $request->cidade_id,
+            'especie_id' => $request->especie_id,
             'image' => $request->image,
+            'especiesId' => $especiesId,
+            'estados' => $estados,
         ]);
     }
 
@@ -40,12 +56,21 @@ class PetController extends Controller
     {
         $user_id  = $request->user()->id;
         
-        $pets = Pet::when($request->has('nome'), function ($whenQuery) use ($request){
+        $estados = $this->getEstados();
+        $especiesId = $this->getEspecies();
+        
+        $pets = Pet::when($request->has('nome'), function ($whenQuery) use ($request) {
             $whenQuery->where('nome', 'like', '%' . $request->nome . '%');
         })
-        ->with('portes')
-        ->with('especies')
-        ->with('racas')
+        ->when($request->filled('especie_id'), function ($whenQuery) use ($request) {
+            $whenQuery->where('especie_id', $request->especie_id);
+        })
+        ->when($request->filled('estado_id'), function ($whenQuery) use ($request) {
+            $whenQuery->where('estado_id', $request->estado_id);
+        })
+        ->when($request->filled('estado_id') && $request->filled('cidadeId'), function ($whenQuery) use ($request) {
+            $whenQuery->where('cidade_id', $request->cidadeId);
+        })
         ->where('user_id', $user_id)
         ->orderByDesc('created_at')
         ->paginate(3)
@@ -54,7 +79,12 @@ class PetController extends Controller
         return view('pets.index', [
             'pets' => $pets,
             'nome' => $request->nome,
+            'estado_id' => $request->estado_id,
+            'cidadeId' => $request->cidade_id,
+            'especie_id' => $request->especie_id,
             'image' => $request->image,
+            'especiesId' => $especiesId,
+            'estados' => $estados,
         ]);
     }
 
@@ -67,7 +97,13 @@ class PetController extends Controller
         $estado = Estado::find($pet->estado_id);
         $cidade = Cidade::find($pet->cidade_id);
 
-        // dd($pet);
+        // Extrair os componentes do número de telefone
+        $ddd = substr($doador->telefone, 0, 2);
+        $prefixo = substr($doador->telefone, 2, 5);
+        $sufixo = substr($doador->telefone, 7);
+
+        // Formatar o número de telefone
+        $telefoneFormatado = "($ddd)$prefixo-$sufixo";
 
         return view('pets.show', [
             'pet' => $pet,
@@ -77,6 +113,7 @@ class PetController extends Controller
             'doador' => $doador,
             'estado' => $estado,
             'cidade' => $cidade,
+            'telefone' => $telefoneFormatado
         ]);
     }
 
@@ -143,7 +180,10 @@ class PetController extends Controller
         $cidadeIdSelected = $pet->cidade_id;
         $estadoIdSelected = $pet->estado_id;
 
-        return view('pets.edit', compact('pet', 'especies', 'especiesIdSelected', 'portes', 'portesIdSelected', 'racas', 'racasIdSelected', 'cidades', 'estados', 'cidadeIdSelected', 'estadoIdSelected'));
+        $generoSelected = $pet->genero;
+        $castracaoSelected = $pet->castracao;
+
+        return view('pets.edit', compact('generoSelected', 'castracaoSelected', 'pet', 'especies', 'especiesIdSelected', 'portes', 'portesIdSelected', 'racas', 'racasIdSelected', 'cidades', 'estados', 'cidadeIdSelected', 'estadoIdSelected'));
     }
     public function update(PetRequest $request, Pet $pet)
     {
@@ -203,6 +243,13 @@ class PetController extends Controller
     {
         $estados = DB::table('estados')
             -> get();
+        return $estados;
+    }
+
+    public function getEstadoId()
+    {
+        $estados = DB::table('estados')
+        ->pluck('id');
         return $estados;
     }
 

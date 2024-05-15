@@ -22,12 +22,24 @@ class PetRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'nome'=> ['required'],
+            'descricao'=> ['required'],
+            'idadeEstimada'=> ['required', 'numeric'],
+            'porte'=> ['required'],
+            'especie'=> ['required'],
+            'raca'=> ['required'],
+            'cidade'=> ['required'],
+            'estado'=> ['required'],
+            'vacinas'=> ['required'],
+            'genero'=> ['required'],
+            'castracao'=> ['required'],
         ];
     }
 
     public function messages(): array
     {
         return[
+            'descricao'=> 'Campo descrição obrigatório',
         ];
     }
 }
