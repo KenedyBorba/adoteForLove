@@ -90,6 +90,7 @@ class PetController extends Controller
 
     public function show(Pet $pet, Request $request)
     {
+        $user_id  = $request->user()->id;
         $porte = Porte::find($pet->porte_id);
         $raca = Raca::find($pet->raca_id);
         $especie = Especie::find($pet->especie_id);
@@ -106,6 +107,7 @@ class PetController extends Controller
         $telefoneFormatado = "($ddd)$prefixo-$sufixo";
 
         return view('pets.show', [
+            'user_id'=> $user_id,
             'pet' => $pet,
             'porte' => $porte,
             'raca' => $raca,

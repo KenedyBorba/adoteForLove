@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
 
-                <div class="mb-3" style="justify-content: space-between">
+                <div class="mb-3" style="justify-content: space-between; position: absolute;">
                     <a href="{{ route('pets.create') }}">
                         <div style="justify-content: space-between" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                             {{ __('Cadastrar novo pet') }}
@@ -20,9 +20,9 @@
                 <div class="mb-3" style="justify-content: space-between">
                     <form action="{{ route('pets.index') }}">
                 
-                        <div class="mb-3">
-                            <div id="mostrar-conteudo" style="cursor: pointer; justify-content: space-between" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                                <img src="img/icon/filter.png" style="width: 12px; height: 12px;" class=""><span style="margin-left: 5px;" class="font-semibold">{{ __('Filtro') }}</span>
+                        <div id="mostrar-conteudo" class="mb-3" style="display: grid; justify-items: end;">
+                            <div  style="cursor: pointer; justify-content: space-between" class="inline-flex items-center px-4 py-2 rounded-md font-semibold text-xs text-black uppercase tracking-widest ">
+                                <img src="img/icon/filter2.png" style="width: 12px; height: 12px;" class=""><span style="margin-left: 5px;" class="font-semibold">{{ __('Filtro') }}</span>
                             </div>
                         </div>
                 
@@ -92,6 +92,7 @@
                         </div>
                     </form>
                 </div>
+                
 
                 <script>
                     $(document).ready(function(){
