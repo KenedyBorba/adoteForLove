@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('racas', function (Blueprint $table) {
             $table->id();
             $table->string('nome')->nullable();
+            $table->foreignIdFor(\App\Models\Especie::class)->nullable();
         });
     }
 

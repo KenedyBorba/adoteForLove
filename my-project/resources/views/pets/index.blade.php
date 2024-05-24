@@ -18,8 +18,12 @@
                 </div>
 
                 <div class="mb-3" style="justify-content: space-between">
-                    <form action="{{ route('pets.index') }}">
-                
+                    @if(request()->route()->getName() == 'pets.index')
+                        <form action="{{ route('pets.index') }}">
+                    @else
+                        <form action="{{ route('pets.myPets') }}">
+                    @endif
+                    
                         <div id="mostrar-conteudo" class="mb-3" style="display: grid; justify-items: end;">
                             <div  style="cursor: pointer; justify-content: space-between" class="inline-flex items-center px-4 py-2 rounded-md font-semibold text-xs text-black uppercase tracking-widest ">
                                 <img src="img/icon/filter2.png" style="width: 12px; height: 12px;" class=""><span style="margin-left: 5px;" class="font-semibold">{{ __('Filtro') }}</span>
@@ -31,62 +35,82 @@
                                 <div class="card mt-3 mb-4 border-light shadow">
                 
                                     <div class="card-body">
-                                        <form action="{{ route('pets.index') }}">
-                                            <div class="mb-3">
-                                                <x-input-label for="nome">Nome</x-input-label>
-                                                <x-text-input type="text" name="nome" id="nome" class="mt-1 block w-full" value="{{ $nome }}" placeholder="Nome do pet" />
-                                            </div>
-                
-                                            <div class="mb-3">
-                                                <x-input-label for="especie_id" :value="__('Espécie')" />
-                                                <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="especie_id" name="especie_id" >
-                                                    <option selected disabled >Selecionar Espécie</option>
-                                                    @foreach ($especiesId as $especie)
-                                                    <option value="{{ $especie->id }}">{{ $especie->nome }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                
-                                            <div class="mb-3">
-                                                <x-input-label for="estado_id" :value="__('Estado')" />
-                                                <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="estado_id" name="estado_id" >
-                                                    <option selected disabled >Selecionar estado</option>
-                                                    @foreach ($estados as $estado)
-                                                    <option value="{{ $estado->id }}">{{ $estado->nome }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                
-                                            <div class="mb-3">
-                                                <x-input-label for="cidadeId" :value="__('Cidade')" />
-                                                <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="cidadeId" name="cidadeId"></select>
-                                            </div>
-                                    
-                                            <script type="text/javascript">
-                                                $(document).ready(function () {
-                                                    $('#estado_id').on('change', function () {
-                                                        var estadoId = this.value;
-                                                        $('#cidadeId').html('');
-                                                        $.ajax({
-                                                            url: '{{ route('cidades') }}?estado_id='+estadoId,
-                                                            type: 'get',
-                                                            success: function (res) {
-                                                                $('#cidadeId').html('<option value="">Selecionar Cidade</option>');
-                                                                $.each(res, function (key, value) {
-                                                                    $('#cidadeId').append('<option value="' + value
-                                                                        .id + '">' + value.nome + '</option>');
-                                                                });
-                                                            }
+                                        @if(request()->route()->getName() == 'pets.index')
+                                            <form action="{{ route('pets.index') }}">
+                                        @else
+                                            <form action="{{ route('pets.myPets') }}">
+                                        @endif
+                                                <div class="mb-3">
+                                                    <x-input-label for="nome">Nome</x-input-label>
+                                                    <x-text-input type="text" name="nome" id="nome" class="mt-1 block w-full" value="{{ $nome }}" placeholder="Nome do pet" />
+                                                </div>
+                    
+                                                <div class="mb-3">
+                                                    <x-input-label for="especie_id" :value="__('Espécie')" />
+                                                    <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="especie_id" name="especie_id" >
+                                                        <option selected disabled >Selecionar Espécie</option>
+                                                        @foreach ($especiesId as $especie)
+                                                        <option @if ($especie_id == $especie->id) selected @endif value="{{ $especie->id }}">{{ $especie->nome }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                    
+                                                <div class="mb-3">
+                                                    <x-input-label for="estado_id" :value="__('Estado')" />
+                                                    <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="estado_id" name="estado_id" >
+                                                        <option selected disabled >Selecionar estado</option>
+                                                        @foreach ($estados as $estado)
+                                                        <option @if ($estado_id == $estado->id) selected @endif value="{{ $estado->id }}">{{ $estado->nome }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+
+
+                                                <div class="mb-3">
+                                                    <x-input-label for="cidadeId" :value="__('Cidade')" />
+                                                    @if ($cidades)
+                                                        <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="cidadeId" name="cidadeId">
+                                                            <option selected disabled >Selecionar cidade</option>
+                                                            @foreach ($cidades as $cidade)
+                                                                <option @if ($cidadeId == $cidade->id) selected @endif value="{{ $cidade->id }}">{{ $cidade->nome }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    @else
+                                                        <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="cidadeId" name="cidadeId"></select>
+                                                    @endif
+                                                </div>
+                                        
+                                                <script type="text/javascript">
+                                                    $(document).ready(function () {
+                                                        $('#estado_id').on('change', function () {
+                                                            var estadoId = this.value;
+                                                            $('#cidadeId').html('');
+                                                            $.ajax({
+                                                                url: '{{ route('cidades') }}?estado_id='+estadoId,
+                                                                type: 'get',
+                                                                success: function (res) {
+                                                                    $('#cidadeId').html('<option value="">Selecionar Cidade</option>');
+                                                                    $.each(res, function (key, value) {
+                                                                        $('#cidadeId').append('<option value="' + value
+                                                                            .id + '">' + value.nome + '</option>');
+                                                                    });
+                                                                }
+                                                            });
                                                         });
                                                     });
-                                                });
-                                            </script>
-                
-                                            <button type="submit" class="btn btn-sm bg-gray-800 text-white" style="background-color:rgb(21, 108, 223);">Pesquisar</button>
-                                            <a href="{{ route('pets.myPets') }}" class="btn btn-warning btn-sm font-semibold">Limpar</a>
+                                                </script>
+                    
+                                                @if(request()->route()->getName() == 'pets.index')
+                                                    <button type="submit" class="btn btn-sm bg-gray-800 text-white" style="background-color:rgb(21, 108, 223);">Pesquisar</button>
+                                                    <a href="{{ route('pets.index') }}" class="btn btn-warning btn-sm font-semibold">Limpar</a>
+                                                @else
+                                                    <button type="submit" class="btn btn-sm bg-gray-800 text-white" style="background-color:rgb(21, 108, 223);">Pesquisar</button>
+                                                    <a href="{{ route('pets.myPets') }}" class="btn btn-warning btn-sm font-semibold">Limpar</a>
+                                                @endif
 
-                                        </div>
-                                    </form>
+                                            </div>
+                                        </form>
                                 </div>
                             </div>
                         </div>
@@ -135,7 +159,7 @@
                     </div>
                 @endforelse
 
-                <div class="col-md-8">
+                <div class="col-md-12" style="display: flex; justify-content: flex-end; margin-left: 0;">
                     {{ $pets->onEachSide(5)->links() }}
                 </div>
 

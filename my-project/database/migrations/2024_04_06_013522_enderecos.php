@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('enderecos', function (Blueprint $table) {
             $table->id();
-            $table->string('rua')->nullable();
-            $table->integer('numero')->nullable();
+            $table->string('logradouro')->nullable();
+            $table->string('numero')->nullable();
             $table->string('bairro')->nullable();
             $table->foreignIdFor(\App\Models\Estado::class)->nullable();
             $table->foreignIdFor(\App\Models\Cidade::class)->nullable();
-
-            $table->timestamp('criado_em')->nullable();
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
         });
     }
 

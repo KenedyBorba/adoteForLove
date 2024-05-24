@@ -13,16 +13,21 @@ return new class extends Migration
     {
         Schema::create('pets', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\User::class);
+            $table->string('image')->nullable();
             $table->string('nome');
             $table->integer('idadeEstimada')->nullable();
-            $table->boolean('vacinas')->nullable();
+            $table->string('vacinas')->nullable();
+            $table->string('descricao')->nullable();
+            $table->enum('genero', ['Macho', 'Fêmea'])->nullable();
+            $table->enum('castracao', ['Sim', 'Não'])->nullable();
+            $table->foreignIdFor(\App\Models\User::class);
             $table->foreignIdFor(\App\Models\Especie::class);
             $table->foreignIdFor(\App\Models\Porte::class);
             $table->foreignIdFor(\App\Models\Raca::class);
-            $table->foreignIdFor(\App\Models\Endereco::class);
-            $table->string('descricao')->nullable();
-            $table->timestamp('criado_em')->nullable();
+            $table->foreignIdFor(\App\Models\Cidade::class)->nullable();
+            $table->foreignIdFor(\App\Models\Estado::class)->nullable();
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
         });
     }
 

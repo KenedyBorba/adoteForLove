@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -11,14 +12,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('cidades', function (Blueprint $table) {
-            $table->string('estado_uf')->nullable();
-        });
-
-        Schema::table('estados', function (Blueprint $table) {
-            $table->string('uf')->nullable();
-        });
-
+        DB::table('portes')->insert(
+            array(
+                ['nome' => 'Pequeno'],
+                ['nome' => 'Médio'],
+                ['nome' => 'Grande'],
+                ['nome' => 'Desconhecido'],
+            )
+        );
     }
 
     /**

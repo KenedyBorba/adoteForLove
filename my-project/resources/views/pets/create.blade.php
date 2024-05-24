@@ -18,7 +18,7 @@
                     </div>
                     <div class="mb-3">
                         <x-input-label for="nome" :value="__('Nome')" />
-                        <x-text-input id="nome" name="nome" type="number" class="mt-1 block w-full" value="{{ old('nome') }}" required/>
+                        <x-text-input id="nome" name="nome" type="text" class="mt-1 block w-full" value="{{ old('nome') }}" required/>
                     </div>
                     <div class="mb-3">
                         <x-input-label for="descricao" :value="__('Descrição')" />
@@ -26,7 +26,7 @@
                     </div>
                     <div class="mb-3">
                         <x-input-label for="idadeEstimada" :value="__('Idade estimada')" />
-                        <x-text-input id="idadeEstimada" name="idadeEstimada" type="text" class="mt-1 block w-full" value="{{ old('idadeEstimada') }}" required/>
+                        <x-text-input id="idadeEstimada" name="idadeEstimada" type="number" class="mt-1 block w-full" value="{{ old('idadeEstimada') }}" required/>
                     </div>
 
                     <div class="mb-3">
@@ -84,9 +84,9 @@
                     <div class="mb-3">
                         <x-input-label for="estado" :value="__('Estado')" />
                         <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="estado" name="estado" required>
-                            <option selected disabled>Selecionar estado</option>
+                            <option selected disabled >Selecionar estado</option>
                             @foreach ($estados as $estado)
-                            <option selected value="{{ $estado->id }}">{{ $estado->nome }}</option>
+                            <option value="{{ $estado->id }}">{{ $estado->nome }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -100,16 +100,23 @@
                         $(document).ready(function () {
                             $('#estado').on('change', function () {
                                 var estadoId = this.value;
+                                console.log('Estado selecionado ID:', estadoId);
                                 $('#cidade').html('');
                                 $.ajax({
                                     url: '{{ route('cidades') }}?estado_id='+estadoId,
                                     type: 'get',
                                     success: function (res) {
+                                        console.log('Resposta AJAX:', res);
                                         $('#cidade').html('<option value="">Selecionar Cidade</option>');
                                         $.each(res, function (key, value) {
+                                            console.log('Adicionando cidade:', value.nome);
                                             $('#cidade').append('<option value="' + value
                                                 .id + '">' + value.nome + '</option>');
                                         });
+                                    },
+                                    error: function (xhr, status, error) {
+                                        console.error('Erro na requisição AJAX:', status, error);
+                                        console.log('Detalhes do erro:', xhr.responseText);
                                     }
                                 });
                             });

@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('pets', function (Blueprint $table) {
-            $table->foreignIdFor(\App\Models\Cidade::class)->nullable();
-            $table->foreignIdFor(\App\Models\Estado::class)->nullable();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('telefone')->nullable();
+            $table->date('data_nascimento');
+            $table->foreignIdFor(\App\Models\Endereco::class)->nullable();
         });
     }
 
@@ -22,8 +23,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('pets', function (Blueprint $table) {
-            $table->dropColumn('endereco_id'); // Excluir a coluna
+        Schema::table('users', function (Blueprint $table) {
+            //
         });
     }
 };

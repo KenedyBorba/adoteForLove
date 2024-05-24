@@ -35,16 +35,21 @@ class PetController extends Controller
             $whenQuery->where('cidade_id', $request->cidadeId);
         })
         ->orderByDesc('created_at')
-        ->paginate(3)
+        ->paginate(6)
         ->withQueryString();
 
-        // dd($request->cidade_id);
+        if ($request->estado_id) {
+            $cidades = $this->getCidadesByEstadoId($request->estado_id);
+        }else{
+            $cidades = $request->cidadeId;
+        }
 
         return view('pets.index', [
             'pets' => $pets,
             'nome' => $request->nome,
             'estado_id' => $request->estado_id,
-            'cidadeId' => $request->cidade_id,
+            'cidadeId' => $request->cidadeId,
+            'cidades' => $cidades,
             'especie_id' => $request->especie_id,
             'image' => $request->image,
             'especiesId' => $especiesId,
@@ -73,14 +78,21 @@ class PetController extends Controller
         })
         ->where('user_id', $user_id)
         ->orderByDesc('created_at')
-        ->paginate(3)
+        ->paginate(6)
         ->withQueryString();
+
+        if ($request->estado_id) {
+            $cidades = $this->getCidadesByEstadoId($request->estado_id);
+        }else{
+            $cidades = $request->cidadeId;
+        }
 
         return view('pets.index', [
             'pets' => $pets,
             'nome' => $request->nome,
             'estado_id' => $request->estado_id,
-            'cidadeId' => $request->cidade_id,
+            'cidadeId' => $request->cidadeId,
+            'cidades' => $cidades,
             'especie_id' => $request->especie_id,
             'image' => $request->image,
             'especiesId' => $especiesId,

@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('cidades', function (Blueprint $table) {
             $table->id();
             $table->string('nome')->nullable();
+            $table->string('estado_uf')->nullable();
+            $table->foreignIdFor(\App\Models\Estado::class)->nullable();
         });
     }
 

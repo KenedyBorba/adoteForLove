@@ -12,4 +12,8 @@ class Especie extends Model
     public function pets(){
         return $this->hasMany(Pet::class);
     }
+
+    public function racas(){
+        return $this->hasMany(Raca::class);
+    }
 }

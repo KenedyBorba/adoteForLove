@@ -12,4 +12,8 @@ class Raca extends Model
     public function pets(){
         return $this->hasMany(Pet::class);
     }
+
+    public function especies(){
+        return $this->belongsTo(Especie::class);
+    }
 }
