@@ -8,8 +8,8 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="items-center align-items-center">
-                    <div style="padding-right: 20px; float: left; width: 300px;">
+                <div class="flex flex-col lg:flex-row lg:items-center lg:space-x-6">
+                    <div class="flex-shrink-0 w-72">
                             <img src="/{{ $pet->image }}" class="border rounded-md" style="width: 300px; height: 300px; object-fit: cover;">
 
                         @if ($doador->id == $user_id)
@@ -30,10 +30,10 @@
                         
                      </div>
 
-                    <div style="margin-left: 330px; width: 800px;">
+                     <div class="mt-6 lg:mt-0">
                         <h2 class="text-lg font-medium text-gray-900"><strong>Nome:</strong> {{ $pet->nome }}</h2>
                         <h2 class="text-lg font-medium text-gray-900"><strong>Descrição:</strong> {{ $pet->descricao }}</h2>
-                        <h2 class="text-lg font-medium text-gray-900"><strong>Idade Estimada:</strong> {{ $pet->idadeEstimada }} ano(s)</h2>
+                        <h2 class="text-lg font-medium text-gray-900"><strong>Idade Estimada:</strong> {{ $pet->idade_estimada }} ano(s)</h2>
                         <h2 class="text-lg font-medium text-gray-900"><strong>Porte:</strong> {{ $porte->nome }}</h2>
                         <h2 class="text-lg font-medium text-gray-900"><strong>Situação das vacinas:</strong> {{ $pet->vacinas }}</h2>
                         <h2 class="text-lg font-medium text-gray-900"><strong>Espécie:</strong> {{ $especie->nome }}</h2>

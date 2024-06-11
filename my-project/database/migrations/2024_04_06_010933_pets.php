@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('image')->nullable();
             $table->string('nome');
-            $table->integer('idadeEstimada')->nullable();
+            $table->integer('idade_estimada')->nullable();
             $table->string('vacinas')->nullable();
             $table->string('descricao')->nullable();
             $table->enum('genero', ['Macho', 'Fêmea'])->nullable();

@@ -15,7 +15,7 @@ class Pet extends Model
         'id', 
         'descricao', 
         'especie_id', 
-        'idadeEstimada', 
+        'idade_estimada', 
         'nome', 
         'estado_id',
         'cidade_id',

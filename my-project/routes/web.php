@@ -25,6 +25,8 @@ Route::middleware('auth')->group(function () {
     //enderecos
     Route::get('/estados', [ProfileController::class, 'getEstados'])->name('estados');
     Route::get('/cidades', [ProfileController::class, 'getCidades'])->name('cidades');
+
+    Route::get('/racas', [PetController::class, 'getRacas'])->name('racas');
 });
 
 require __DIR__.'/auth.php';

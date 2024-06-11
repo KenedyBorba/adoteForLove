@@ -136,13 +136,11 @@ class PetController extends Controller
         $user_id  = $request->user()->id;
         $portes = $this->getPortes();
         $especies = $this->getEspecies();
-        $racas = $this->getRacas();
         $estados = $this->getEstados();
 
         return view('pets.create',[
             'portes' => $portes,
             'especies' => $especies,
-            'racas'=> $racas,
             'estados' => $estados,
             'user_id '=> $user_id,
         ]);
@@ -182,7 +180,6 @@ class PetController extends Controller
         $user  = $request->user()->id;
         $portes = $this->getPortes();
         $especies = $this->getEspecies();
-        $racas = $this->getRacas();
         $estados = $this->getEstados();
 
         $portesIdSelected = Porte::find($pet->porte_id)['id'];
@@ -190,6 +187,10 @@ class PetController extends Controller
         $racasIdSelected = Raca::find($pet->raca_id)['id'];
 
         $cidades = $this->getCidadesByEstadoId($pet->estado_id);
+
+        $racas = $this->getRacasByEspecieId($pet->especie_id);
+
+        $cidadeIdSelected = $pet->cidade_id;
 
         $cidadeIdSelected = $pet->cidade_id;
         $estadoIdSelected = $pet->estado_id;
@@ -239,11 +240,15 @@ class PetController extends Controller
         return $portes;
     }
 
-    public function getRacas()
+    public function getRacas(Request $request)
     {
         $racas = DB::table('racas')
-            -> get();
-        return $racas;
+            ->where('especie_id', $request->especie_id)
+            ->get();
+
+        if(count($racas) > 0){
+            return response()->json($racas);
+        }
     }
 
     public function getEspecies()
@@ -286,6 +291,19 @@ class PetController extends Controller
 
         if(count($cidades) > 0){
             return $cidades;
+        }
+
+        return [];
+    }
+
+    public function getRacasByEspecieId(string $especieId)
+    {
+        $racas = DB::table('racas')
+            ->where('especie_id', $especieId)
+            ->get();
+
+        if(count($racas) > 0){
+            return $racas;
         }
 
         return [];

@@ -25,8 +25,8 @@
                         <x-text-input id="descricao" name="descricao" type="text" class="mt-1 block w-full" value="{{ old('descricao', $pet->descricao) }}" required/>
                     </div>
                     <div class="mb-3">
-                        <x-input-label for="idadeEstimada" :value="__('Idade estimada')" />
-                        <x-text-input id="idadeEstimada" name="idadeEstimada" type="number" class="mt-1 block w-full" value="{{ old('idadeEstimada', $pet->idadeEstimada) }}" required/>
+                        <x-input-label for="idade_estimada" :value="__('Idade estimada')" />
+                        <x-text-input id="idade_estimada" name="idade_estimada" type="number" class="mt-1 block w-full" value="{{ old('idade_estimada', $pet->idade_estimada) }}" required/>
                     </div>
 
                     <div class="mb-3">
@@ -69,13 +69,37 @@
 
                     <div class="mb-3">
                         <x-input-label for="raca" :value="__('Raça')" />
-                        <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="raca" name="raca" required>
-                            <option selected disabled >Selecionar raça</option>
-                            @foreach ($racas as $raca)
-                            <option @if ($racasIdSelected == $raca->id) selected @endif value="{{ $raca->id }}">{{ $raca->nome }}</option>
-                            @endforeach
-                        </select>
+                        @if ($racas)
+                            <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="raca" name="raca" required>
+                                <option selected disabled >Selecionar raça</option>
+                                @foreach ($racas as $raca)
+                                    <option @if ($racasIdSelected == $raca->id) selected @endif value="{{ $raca->id }}">{{ $raca->nome }}</option>
+                                @endforeach
+                            </select>
+                        @else
+                            <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="raca" name="raca" required></select>
+                        @endif
                     </div>
+            
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            $('#especie').on('change', function () {
+                                var especieId = this.value;
+                                $('#raca').html('');
+                                $.ajax({
+                                    url: '{{ route('racas') }}?especie_id='+especieId,
+                                    type: 'get',
+                                    success: function (res) {
+                                        $('#raca').html('<option value="">Selecionar Raça</option>');
+                                        $.each(res, function (key, value) {
+                                            $('#raca').append('<option value="' + value
+                                                .id + '">' + value.nome + '</option>');
+                                        });
+                                    }
+                                });
+                            });
+                        });
+                    </script>
 
                     <div class="mb-3">
                         <x-input-label :value="__('Vacinas')" />

@@ -25,8 +25,8 @@
                         <x-text-input id="descricao" name="descricao" type="text" class="mt-1 block w-full" value="{{ old('descricao') }}" required/>
                     </div>
                     <div class="mb-3">
-                        <x-input-label for="idadeEstimada" :value="__('Idade estimada')" />
-                        <x-text-input id="idadeEstimada" name="idadeEstimada" type="number" class="mt-1 block w-full" value="{{ old('idadeEstimada') }}" required/>
+                        <x-input-label for="idade_estimada" :value="__('Idade estimada')" />
+                        <x-text-input id="idade_estimada" name="idade_estimada" type="number" class="mt-1 block w-full" value="{{ old('idade_estimada') }}" required/>
                     </div>
 
                     <div class="mb-3">
@@ -69,13 +69,29 @@
 
                     <div class="mb-3">
                         <x-input-label for="raca" :value="__('Raça')" />
-                        <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="raca" name="raca" required>
-                            <option selected disabled >Selecionar raça</option>
-                            @foreach ($racas as $raca)
-                            <option value="{{ $raca->id }}">{{ $raca->nome }}</option>
-                            @endforeach
-                        </select>
+                        <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="raca" name="raca" required></select>
                     </div>
+            
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            $('#especie').on('change', function () {
+                                var especieId = this.value;
+                                $('#raca').html('');
+                                $.ajax({
+                                    url: '{{ route('racas') }}?especie_id='+especieId,
+                                    type: 'get',
+                                    success: function (res) {
+                                        $('#raca').html('<option value="">Selecionar raça</option>');
+                                        $.each(res, function (key, value) {
+                                            $('#raca').append('<option value="' + value
+                                                .id + '">' + value.nome + '</option>');
+                                        });
+                                    },
+                                });
+                            });
+                        });
+                    </script>
+
                     <div class="mb-3">
                         <x-input-label for="vacinas" :value="__('Vacinas')" />
                         <x-text-input id="vacinas" name="vacinas" type="text" class="mt-1 block w-full" value="{{ old('vacinas') }}" required/>
@@ -100,24 +116,17 @@
                         $(document).ready(function () {
                             $('#estado').on('change', function () {
                                 var estadoId = this.value;
-                                console.log('Estado selecionado ID:', estadoId);
                                 $('#cidade').html('');
                                 $.ajax({
                                     url: '{{ route('cidades') }}?estado_id='+estadoId,
                                     type: 'get',
                                     success: function (res) {
-                                        console.log('Resposta AJAX:', res);
-                                        $('#cidade').html('<option value="">Selecionar Cidade</option>');
+                                        $('#cidade').html('<option value="">Selecionar cidade</option>');
                                         $.each(res, function (key, value) {
-                                            console.log('Adicionando cidade:', value.nome);
                                             $('#cidade').append('<option value="' + value
                                                 .id + '">' + value.nome + '</option>');
                                         });
                                     },
-                                    error: function (xhr, status, error) {
-                                        console.error('Erro na requisição AJAX:', status, error);
-                                        console.log('Detalhes do erro:', xhr.responseText);
-                                    }
                                 });
                             });
                         });

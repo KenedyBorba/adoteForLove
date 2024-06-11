@@ -48,7 +48,7 @@
                                                 <div class="mb-3">
                                                     <x-input-label for="especie_id" :value="__('Espécie')" />
                                                     <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="especie_id" name="especie_id" >
-                                                        <option selected disabled >Selecionar Espécie</option>
+                                                        <option selected value="">Todas as espécies</option>
                                                         @foreach ($especiesId as $especie)
                                                         <option @if ($especie_id == $especie->id) selected @endif value="{{ $especie->id }}">{{ $especie->nome }}</option>
                                                         @endforeach
@@ -133,7 +133,7 @@
                     
                     <div class="col-md-6">
                         <a href="{{ route('pets.show', $pet->id) }}" style="text-decoration: none; color: inherit;">
-                            <div class="card mb-3 px-2 py-2 bg-gray-800 border border-transparent rounded-md text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150" style="width: 570px; height: auto; min-height: 150px; flex-grow: 1; margin: 0 0px;">
+                            <div class="card mb-3 px-2 py-2 bg-gray-800 border border-transparent rounded-md text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150" style="height: auto; min-height: 150px; flex-grow: 1; margin: 0 0px;">
                                 <div class="row g-0">
                                     <div class="col-md-5" style="">
                                         <img src="/{{ $pet->image }}" class="rounded-md" style="width: 200px; height: 200px; object-fit: cover;">
@@ -142,7 +142,7 @@
                                         <div class="card-body">
                                             <h5 class="card-title font-bold">{{ $pet->nome }}</h5>
                                             <p class="card-text text-xs">{{ Str::limit($pet->descricao, 150) }}</p>
-                                            <p class="card-text text-xs"><small class="text-body-secondary">{{ $pet->idadeEstimada }} ano(s)</small></p>
+                                            <p class="card-text text-xs"><small class="text-body-secondary">{{ $pet->idade_estimada }} ano(s)</small></p>
                                         </div>
                                     </div>
                                 </div>

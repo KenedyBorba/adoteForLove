@@ -23,8 +23,8 @@ class PetRequest extends FormRequest
     {
         return [
             'nome'=> ['required'],
-            'descricao'=> ['required'],
-            'idadeEstimada'=> ['required', 'numeric'],
+            'descricao'=> ['required', 'string', 'max:255'],
+            'idade_estimada'=> ['required', 'numeric'],
             'porte'=> ['required'],
             'especie'=> ['required'],
             'raca'=> ['required'],
