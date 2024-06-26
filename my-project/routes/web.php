@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\PaisEstadoCidadeController;
+use Chatify\Facades\ChatifyMessenger;
+use Chatify\Http\Controllers\MessagesController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -27,6 +29,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/cidades', [ProfileController::class, 'getCidades'])->name('cidades');
 
     Route::get('/racas', [PetController::class, 'getRacas'])->name('racas');
+
+    Route::get('/chat', [MessagesController::class, 'index'])->name('chat');
+    Route::get('/chatify/{id}', [MessagesController::class, 'index'])->name('chat.show');    
+
 });
 
 require __DIR__.'/auth.php';
