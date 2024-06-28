@@ -2,13 +2,12 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PetController;
-use App\Http\Controllers\PaisEstadoCidadeController;
-use Chatify\Facades\ChatifyMessenger;
+use App\Http\Controllers\Auth\PasswordController;
 use Chatify\Http\Controllers\MessagesController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('auth.login');
+    return redirect()->route('pets.index');
 });
 
 Route::get('/dashboard', function () {
@@ -21,7 +20,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     //pets
-    Route::resource('pets', PetController::class);
     Route::get('/my-pets',[PetController::class, 'myPets'])->name('pets.myPets');
 
     //enderecos
@@ -34,5 +32,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/chatify/{id}', [MessagesController::class, 'index'])->name('chat.show');    
 
 });
+
+Route::post('/forgot-password', [PasswordController::class, 'sendResetLinkEmail']);
+Route::get('/password/reset/{token}', [PasswordController::class, 'reset']);
+
+Route::resource('pets', PetController::class);
 
 require __DIR__.'/auth.php';

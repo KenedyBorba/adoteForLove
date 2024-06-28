@@ -43,7 +43,7 @@ class PetController extends Controller
         }else{
             $cidades = $request->cidadeId;
         }
-
+        
         return view('pets.index', [
             'pets' => $pets,
             'nome' => $request->nome,
@@ -102,7 +102,12 @@ class PetController extends Controller
 
     public function show(Pet $pet, Request $request)
     {
-        $user_id  = $request->user()->id;
+        if($request->user()){
+            $user_id  = $request->user()->id;
+        }else{
+            $user_id = null;
+        }
+        
         $porte = Porte::find($pet->porte_id);
         $raca = Raca::find($pet->raca_id);
         $especie = Especie::find($pet->especie_id);
