@@ -43,7 +43,7 @@ class PetController extends Controller
         }else{
             $cidades = $request->cidadeId;
         }
-
+        
         return view('pets.index', [
             'pets' => $pets,
             'nome' => $request->nome,

@@ -33,6 +33,10 @@ Route::middleware('auth')->group(function () {
 
 });
 
+//enderecos
+Route::get('/estados', [ProfileController::class, 'getEstados'])->name('estados');
+Route::get('/cidades', [ProfileController::class, 'getCidades'])->name('cidades');
+
 Route::post('/forgot-password', [PasswordController::class, 'sendResetLinkEmail']);
 Route::get('/password/reset/{token}', [PasswordController::class, 'reset']);
 
