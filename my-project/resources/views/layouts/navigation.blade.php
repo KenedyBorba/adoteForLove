@@ -19,6 +19,13 @@
                         <x-nav-link :href="route('chat')" :active="request()->routeIs('chat')">
                             {{ __('Bate-papo') }}
                         </x-nav-link>
+                    @else
+                        <x-nav-link :href="route('login')">
+                            {{ __('Entrar') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('register')">
+                            {{ __('Cadastrar') }}
+                        </x-nav-link>
                     @endif
                 </div>
             </div>
@@ -89,6 +96,19 @@
             <x-responsive-nav-link :href="route('pets.index')" :active="request()->routeIs('pets.index')">
                 {{ __('Painel') }}
             </x-responsive-nav-link>
+            @if (Auth::user())
+                <x-responsive-nav-link :href="route('chat')" :active="request()->routeIs('chat')">
+                    {{ __('Bate-papo') }}
+                </x-responsive-nav-link>
+            @else
+                <x-responsive-nav-link :href="route('login')">
+                    {{ __('Entrar') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('register')">
+                    {{ __('Cadastrar') }}
+                </x-responsive-nav-link>
+            @endif
+
         </div>
 
         <!-- Responsive Settings Options -->
