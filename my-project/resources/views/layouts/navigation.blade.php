@@ -19,13 +19,6 @@
                         <x-nav-link :href="route('chat')" :active="request()->routeIs('chat')">
                             {{ __('Bate-papo') }}
                         </x-nav-link>
-                    @else
-                        <x-nav-link :href="route('login')">
-                            {{ __('Entrar') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('register')">
-                            {{ __('Cadastrar') }}
-                        </x-nav-link>
                     @endif
                 </div>
             </div>
