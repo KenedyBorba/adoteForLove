@@ -96,11 +96,13 @@
             @if ($cidades)
                 <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="cidade" name="cidade" >
                     <option selected disabled >Selecionar cidade</option>
+                    <h1>carro1</h1>
                     @foreach ($cidades as $cidade)
                         <option @if ($cidadeIdSelected == $cidade->id) selected @endif value="{{ $cidade->id }}">{{ $cidade->nome }}</option>
                     @endforeach
                 </select>
             @else
+                <h1>carro2</h1>
                 <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" id="cidade" name="cidade" ></select>
             @endif
 

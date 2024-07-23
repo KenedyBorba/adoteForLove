@@ -25,8 +25,8 @@ class ProfileController extends Controller
         $endereco = Endereco::find($request->user()->endereco_id);
 
         if ($endereco != null) {
-            if ($request->estado_id) {
-                $cidades = $this->getCidadesByEstadoId($request->estado_id);
+            if ($endereco->estado_id) {
+                $cidades = $this->getCidadesByEstadoId($endereco->estado_id);
             }else{
                 $cidades = $request->cidadeId;
             }
