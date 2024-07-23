@@ -220,6 +220,10 @@ class PetController extends Controller
 
             $extension = $requestImage->extension();
 
+            if ($extension === 'heic') {
+                return back()->withErrors(['image' => 'O formato HEIC não é aceito. Por favor, envie um arquivo em formato JPG, PNG ou GIF.'])->withInput();
+            }
+
             $imageName = md5($requestImage->getClientOriginalName()) .'.'. strtotime("now") . "." . $extension;
 
             $requestImage->move(public_path('img/pets'), $imageName);
